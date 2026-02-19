@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Press Start 2P', cursive;
+  background-color: #FFF4C2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation; /* 防止移动端双击缩放 */
+  user-select: none; /* 防止长按选择文本 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: 'Press Start 2P', cursive;
+  image-rendering: pixelated;
+}
+
+/* 电脑屏幕扫描线效果 */
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scan-line {
+  animation: scan-line 8s linear infinite;
+}
+
+/* 咖啡蒸汽动画 */
+@keyframes steam {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(1.5);
+  }
+}
+
+.steam {
+  animation: steam 2s ease-in-out infinite;
+}
+
+/* 鼠标悬停微动画 */
+@keyframes mouse-wobble {
+  0%, 100% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+.mouse-wobble {
+  animation: mouse-wobble 3s ease-in-out infinite;
+}
