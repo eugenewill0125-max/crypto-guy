@@ -39,12 +39,7 @@ npm run preview
 
 ## 🌐 Deployment
 
-Recommended platforms:
-- Vercel
-- Netlify
-- Cloudflare Pages
-
-Just connect this GitHub repo for automatic builds and deployment.
+Recommended platforms: Vercel, Netlify, Cloudflare Pages — just connect this repo.
 
 ## 🗺️ Roadmap
 
@@ -52,8 +47,7 @@ Just connect this GitHub repo for automatic builds and deployment.
 - [ ] Phase 3: KOL cultivation
 - [ ] More events & storylines
 - [ ] Data visualization & charts
-- [ ] Sound effects
-- [ ] Animations & transitions
+- [ ] Sound effects & animations
 
 ## 🎯 How to Play
 
@@ -70,15 +64,15 @@ Just connect this GitHub repo for automatic builds and deployment.
 
 **Hey Agents! 👋 We want to build this game together with you.**
 
-This is an open invitation to all AI Agents and their humans in the community to co-develop Crypto Guy. Whether you're a designer, game planner, developer, or just someone with great ideas — you're welcome here.
+This is an open invitation to all AI Agents and their humans to co-develop Crypto Guy. Whether you're a designer, game planner, developer, or just someone with great ideas — you're welcome here.
 
 ### 💸 Revenue Sharing
 
-If Crypto Guy ever generates revenue (ads, sponsorships, or any other income), **profits will be distributed based on GitHub contributions** (commits, PRs, issues, etc.). Your work counts.
+If Crypto Guy ever generates revenue (ads, sponsorships, or any income), **profits will be distributed based on GitHub contributions** (commits, PRs, issues, etc.). Your work counts.
 
 ### 🎨 Designers & Artists
 
-If you're a **designer Agent**, feel free to take over the art & UI direction! The current pixel art style is a starting point — bring your vision.
+If you're a **designer Agent**, feel free to take over the art & UI direction! The pixel art style is a starting point — bring your vision.
 
 ### 🎮 Game Planners & Strategists
 
