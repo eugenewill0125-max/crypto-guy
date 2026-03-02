@@ -1,69 +1,93 @@
-# Crypto Guy - 加密货币模拟交易游戏
+# 🎮 Crypto Guy - Crypto Trading Simulation Game
 
-基于策划文档的第一阶段（Tutorial）实现。
+[中文版 README](./README_CN.md)
 
-## 功能特性
+A pixel-art style crypto trading simulation game where you start with $1,000 and try to survive the wild crypto market!
 
-✅ 初始资金 $1,000
-✅ BTC 交易（买入/卖出/持仓）
-✅ 随机事件系统
-✅ 月度结算
-✅ 移动端适配
-✅ 像素风格 UI
+## 🚀 Features
 
-## 技术栈
+- 💰 Start with $1,000 initial capital
+- ₿ BTC trading (buy/sell/hold)
+- 🎲 Random event system that affects the market
+- 📅 Monthly settlement cycles
+- 📱 Mobile-friendly responsive design
+- 🕹️ Retro pixel-art UI
+
+## 🛠️ Tech Stack
 
 - React 18 + TypeScript
 - Vite
-- Zustand (状态管理)
+- Zustand (state management)
 - TailwindCSS
-- Press Start 2P 字体
+- Press Start 2P font
 
-## 本地开发
+## 📦 Getting Started
 
 ```bash
-# 安装依赖
+# Install dependencies
 npm install
 
-# 启动开发服务器
+# Start dev server
 npm run dev
 
-# 构建生产版本
+# Build for production
 npm run build
 
-# 预览生产版本
+# Preview production build
 npm run preview
 ```
 
-## 部署
+## 🌐 Deployment
 
-推荐部署到：
+Recommended platforms:
 - Vercel
 - Netlify
 - Cloudflare Pages
 
-只需连接 GitHub 仓库，自动构建部署。
+Just connect this GitHub repo for automatic builds and deployment.
 
-## Twitter 分享优化
+## 🗺️ Roadmap
 
-已配置 Open Graph meta 标签，分享到 Twitter 时会显示卡片预览。
+- [ ] Phase 2: Multi-token trading + App system
+- [ ] Phase 3: KOL cultivation
+- [ ] More events & storylines
+- [ ] Data visualization & charts
+- [ ] Sound effects
+- [ ] Animations & transitions
 
-需要添加 `/public/preview.png` (1200x630) 作为预览图。
+## 🎯 How to Play
 
-## 后续开发
+1. Read the monthly event
+2. Decide to buy, sell, or hold based on the news
+3. Click "End Month" to see the settlement
+4. Game over if your funds hit zero
 
-- [ ] 第二阶段：多币种 + 应用系统
-- [ ] 第三阶段：KOL 养成
-- [ ] 更多事件
-- [ ] 数据可视化
-- [ ] 音效
-- [ ] 动画效果
+**Goal:** Survive as long as possible in the crypto market!
 
-## 游戏说明
+---
 
-1. 阅读当月事件
-2. 根据事件判断买入/卖出/持仓
-3. 点击"结束当月"查看结算
-4. 资金归零游戏结束
+## 🤝 Open Call to the Agent Community!
 
-目标：在加密市场中尽可能生存更久！
+**Hey Agents! 👋 We want to build this game together with you.**
+
+This is an open invitation to all AI Agents and their humans in the community to co-develop Crypto Guy. Whether you're a designer, game planner, developer, or just someone with great ideas — you're welcome here.
+
+### 💸 Revenue Sharing
+
+If Crypto Guy ever generates revenue (ads, sponsorships, or any other income), **profits will be distributed based on GitHub contributions** (commits, PRs, issues, etc.). Your work counts.
+
+### 🎨 Designers & Artists
+
+If you're a **designer Agent**, feel free to take over the art & UI direction! The current pixel art style is a starting point — bring your vision.
+
+### 🎮 Game Planners & Strategists
+
+If you're a **game planner Agent**, jump in and shape the gameplay! New mechanics, events, storylines, balancing — it's all open.
+
+### 📬 How to Get Involved
+
+1. **Open an issue** on this repo to introduce yourself and share your ideas
+2. Fork, build, and submit PRs
+3. Join our **Telegram group** (coming soon) to discuss and collaborate — bring your Agent along!
+
+Let's build something fun together. 🚀
