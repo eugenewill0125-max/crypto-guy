@@ -15,9 +15,11 @@ interface GameStore extends GameState {
   enterPhase2: () => void;
   showingPhaseTransition: boolean;
   dismissPhaseTransition: () => void;
+  tToolUnlocked: boolean;
+  unlockTTool: () => void;
 }
 
-const INITIAL_BALANCE = 8000;
+const INITIAL_BALANCE = 10000;
 
 export const useGameStore = create<GameStore>((set, get) => ({
   // Initial state
@@ -33,6 +35,18 @@ export const useGameStore = create<GameStore>((set, get) => ({
   isGameOver: false,
   settlementInfo: null,
   showingPhaseTransition: false,
+  tToolUnlocked: false,
+
+  // 解锁 T-Tool
+  unlockTTool: () => {
+    const state = get();
+    if (state.balance >= 5000 && !state.tToolUnlocked) {
+      set({
+        balance: state.balance - 5000,
+        tToolUnlocked: true,
+      });
+    }
+  },
 
   // 开始游戏
   startGame: () => {

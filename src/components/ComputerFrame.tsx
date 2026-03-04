@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import SECChairPanel from './SECChairPanel';
+import TToolPanel from './TToolPanel';
 
 interface ComputerFrameProps {
   children: ReactNode;
@@ -8,8 +9,9 @@ interface ComputerFrameProps {
 export default function ComputerFrame({ children }: ComputerFrameProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 flex flex-col items-center justify-center p-2 sm:p-4 gap-2 sm:gap-4">
-      {/* SEC 主席面板 - 顶部右侧 */}
-      <div className="w-full max-w-4xl flex justify-end items-start">
+      {/* 顶部面板 - T-Tool 左侧, SEC 右侧 */}
+      <div className="w-full max-w-4xl flex justify-between items-start">
+        <TToolPanel />
         <SECChairPanel />
       </div>
       
@@ -36,15 +38,6 @@ export default function ComputerFrame({ children }: ComputerFrameProps) {
               </div>
               
               <div className="bg-primary overflow-y-auto relative z-0" style={{ maxHeight: '70vh' }}>
-                {/* T-tool Logo */}
-                <div className="flex justify-center py-2 bg-primary">
-                  <img
-                    src="/t-tool-logo.jpg"
-                    alt="T-tool"
-                    className="h-12 sm:h-16 border-2 border-black"
-                    style={{ imageRendering: 'pixelated' }}
-                  />
-                </div>
                 {children}
               </div>
             </div>
