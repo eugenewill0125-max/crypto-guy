@@ -9,9 +9,10 @@ import Header from './components/Header';
 import EventCard from './components/EventCard';
 import TradePanel from './components/TradePanel';
 import GameOver from './components/GameOver';
+import PhaseTransition from './components/PhaseTransition';
 
 function GameContent() {
-  const { startGame, isGameOver, stage, skipTutorial, settlementInfo, closeSettlement } = useGameStore();
+  const { startGame, isGameOver, stage, skipTutorial, settlementInfo, closeSettlement, showingPhaseTransition, dismissPhaseTransition } = useGameStore();
   const [showMenu, setShowMenu] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -21,13 +22,11 @@ function GameContent() {
   };
 
   const handleContinue = () => {
-    // 未来实现：从数据库加载存档
     console.log('Continue game - not implemented yet');
   };
 
   const handleToggleMute = () => {
     setIsMuted(!isMuted);
-    // 未来实现：切换音效
   };
 
   const handleSkipTutorial = () => {
@@ -44,6 +43,11 @@ function GameContent() {
         isMuted={isMuted}
       />
     );
+  }
+
+  // Phase transition screen
+  if (showingPhaseTransition) {
+    return <PhaseTransition onDismiss={dismissPhaseTransition} />;
   }
 
   // 游戏结束

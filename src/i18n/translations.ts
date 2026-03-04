@@ -50,7 +50,11 @@ export const translations = {
     secChair: 'SEC 主席',
     profit: '收益',
     loss: '亏损',
-    term: '任期'
+    term: '任期',
+    
+    // Phase 2
+    phase2Subtitle: '多币种交易',
+    enterPhase2: '进入第二阶段'
   },
   
   en: {
@@ -102,7 +106,11 @@ export const translations = {
     secChair: 'SEC Chair',
     profit: 'Profit',
     loss: 'Loss',
-    term: 'Term'
+    term: 'Term',
+    
+    // Phase 2
+    phase2Subtitle: 'Multi-Token Trading',
+    enterPhase2: 'Enter Phase 2'
   }
 };
 

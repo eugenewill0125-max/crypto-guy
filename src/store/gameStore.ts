@@ -1,17 +1,20 @@
 import { create } from 'zustand';
 import { GameState, TradeAction, Position } from '../types';
-import { getRandomEvent, tutorialEvents } from '../data/events';
-import { tokens } from '../data/tokens';
+import { getRandomEvent, tutorialEvents, phase2Events } from '../data/events';
+import { tokens, initialPrices } from '../data/tokens';
 import { getCurrentSECChair } from '../data/secChairs';
 
 interface GameStore extends GameState {
   // Actions
   startGame: () => void;
-  executeTrade: (action: TradeAction, amount: number) => void;
+  executeTrade: (action: TradeAction, amount: number, tokenId?: string) => void;
   endMonth: () => void;
   resetGame: () => void;
   skipTutorial: () => void;
   closeSettlement: () => void;
+  enterPhase2: () => void;
+  showingPhaseTransition: boolean;
+  dismissPhaseTransition: () => void;
 }
 
 const INITIAL_BALANCE = 8000;
@@ -29,6 +32,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   fans: 0,
   isGameOver: false,
   settlementInfo: null,
+  showingPhaseTransition: false,
 
   // 开始游戏
   startGame: () => {
@@ -39,43 +43,57 @@ export const useGameStore = create<GameStore>((set, get) => ({
       balance: INITIAL_BALANCE,
       positions: [],
       trades: [],
-      isGameOver: false
+      isGameOver: false,
+      stage: 'tutorial',
+      unlockedTokens: ['btc'],
+      showingPhaseTransition: false
+    });
+  },
+
+  // 进入第二阶段
+  enterPhase2: () => {
+    set({
+      showingPhaseTransition: true
+    });
+  },
+
+  dismissPhaseTransition: () => {
+    const nextEvent = getRandomEvent(phase2Events);
+    set({
+      showingPhaseTransition: false,
+      stage: 'free',
+      unlockedTokens: ['btc', 'eth', 'sol', 'doge'],
+      currentEvent: nextEvent
     });
   },
 
   // 执行交易
-  executeTrade: (action: TradeAction, amount: number) => {
+  executeTrade: (action: TradeAction, amount: number, tokenId?: string) => {
     const state = get();
-    const tokenId = 'btc'; // 第一阶段只有 BTC
-    const token = tokens[tokenId];
+    const tid = tokenId || 'btc';
+    const token = tokens[tid];
+    if (!token) return;
     const currentPrice = token.currentPrice;
 
     if (action === 'buy') {
       const cost = amount * currentPrice;
-      if (cost > state.balance) {
-        // Alert will be shown by component with i18n
-        return;
-      }
+      if (cost > state.balance) return;
 
-      // 购买
       const newBalance = state.balance - cost;
-      const existingPosition = state.positions.find(p => p.tokenId === tokenId);
+      const existingPosition = state.positions.find(p => p.tokenId === tid);
 
       let newPositions: Position[];
       if (existingPosition) {
-        // 更新现有持仓
         const totalAmount = existingPosition.amount + amount;
         const totalCost = existingPosition.averagePrice * existingPosition.amount + cost;
         const newAvgPrice = totalCost / totalAmount;
-        
         newPositions = state.positions.map(p =>
-          p.tokenId === tokenId
+          p.tokenId === tid
             ? { ...p, amount: totalAmount, averagePrice: newAvgPrice }
             : p
         );
       } else {
-        // 新建持仓
-        newPositions = [...state.positions, { tokenId, amount, averagePrice: currentPrice }];
+        newPositions = [...state.positions, { tokenId: tid, amount, averagePrice: currentPrice }];
       }
 
       set({
@@ -84,7 +102,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         trades: [...state.trades, {
           month: state.currentMonth,
           action,
-          tokenId,
+          tokenId: tid,
           amount,
           price: currentPrice,
           total: cost
@@ -92,18 +110,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
       });
 
     } else if (action === 'sell') {
-      const position = state.positions.find(p => p.tokenId === tokenId);
-      if (!position || position.amount < amount) {
-        // Alert will be shown by component with i18n
-        return;
-      }
+      const position = state.positions.find(p => p.tokenId === tid);
+      if (!position || position.amount < amount) return;
 
-      // 卖出
       const revenue = amount * currentPrice;
       const newBalance = state.balance + revenue;
-      
       const newPositions = state.positions.map(p =>
-        p.tokenId === tokenId
+        p.tokenId === tid
           ? { ...p, amount: p.amount - amount }
           : p
       ).filter(p => p.amount > 0);
@@ -114,7 +127,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         trades: [...state.trades, {
           month: state.currentMonth,
           action,
-          tokenId,
+          tokenId: tid,
           amount,
           price: currentPrice,
           total: revenue
@@ -122,12 +135,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
       });
 
     } else if (action === 'idle') {
-      // 什么都不做
       set({
         trades: [...state.trades, {
           month: state.currentMonth,
           action,
-          tokenId,
+          tokenId: tid,
           amount: 0,
           price: currentPrice,
           total: 0
@@ -141,78 +153,101 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const state = get();
     if (!state.currentEvent) return;
 
-    // 获取当前 SEC 主席
     const secChair = getCurrentSECChair(state.currentMonth);
 
-    // 应用事件影响
-    const impact = state.currentEvent.impacts.find(i => i.tokenId === 'btc');
-    if (impact) {
-      const originalPriceChange = impact.priceChange;
+    // Apply all impacts from the event
+    for (const impact of state.currentEvent.impacts) {
+      const token = tokens[impact.tokenId];
+      if (!token) continue;
+
       let priceChangePercent = impact.priceChange / 100;
-      
-      // 应用 SEC 主席修正
+
+      // Apply SEC chair modifier
       if (priceChangePercent > 0) {
-        // 收益：应用收益修正
         priceChangePercent = priceChangePercent * (1 + secChair.profitModifier / 100);
       } else if (priceChangePercent < 0) {
-        // 亏损：应用亏损修正
         priceChangePercent = priceChangePercent * (1 + secChair.lossModifier / 100);
       }
-      
-      const newPrice = tokens.btc.currentPrice * (1 + priceChangePercent);
-      tokens.btc.currentPrice = Math.round(newPrice);
 
-      // 计算持仓盈亏
-      const btcPosition = state.positions.find(p => p.tokenId === 'btc');
-      let profitLoss = 0;
-      if (btcPosition) {
-        const newValue = btcPosition.amount * newPrice;
-        const oldValue = btcPosition.amount * btcPosition.averagePrice;
-        profitLoss = newValue - oldValue;
+      const newPrice = token.currentPrice * (1 + priceChangePercent);
+      token.currentPrice = Math.max(0.001, newPrice);
+    }
+
+    // Calculate total P/L across all positions
+    let totalProfitLoss = 0;
+    for (const pos of state.positions) {
+      const token = tokens[pos.tokenId];
+      if (!token) continue;
+      const currentValue = pos.amount * token.currentPrice;
+      const costBasis = pos.amount * pos.averagePrice;
+      totalProfitLoss += currentValue - costBasis;
+    }
+
+    // Calculate total assets
+    const totalValue = state.balance + state.positions.reduce((sum, p) => {
+      const token = tokens[p.tokenId];
+      return sum + (token ? p.amount * token.currentPrice : 0);
+    }, 0);
+
+    if (totalValue <= 0) {
+      set({ isGameOver: true });
+      return;
+    }
+
+    // Get primary impact for settlement display (BTC or first impact)
+    const primaryImpact = state.currentEvent.impacts.find(i => i.tokenId === 'btc') || state.currentEvent.impacts[0];
+    const originalPriceChange = primaryImpact ? primaryImpact.priceChange : 0;
+    let displayPriceChange = originalPriceChange;
+    if (primaryImpact) {
+      let pct = primaryImpact.priceChange / 100;
+      if (pct > 0) pct = pct * (1 + secChair.profitModifier / 100);
+      else if (pct < 0) pct = pct * (1 + secChair.lossModifier / 100);
+      displayPriceChange = pct * 100;
+    }
+
+    // Check if tutorial phase should transition to phase 2
+    const nextMonth = state.currentMonth + 1;
+    const shouldTransition = state.stage === 'tutorial' && nextMonth > 12;
+
+    // Get next event from appropriate pool
+    const eventPool = (state.stage === 'free' || shouldTransition) ? phase2Events : tutorialEvents;
+    const nextEvent = getRandomEvent(eventPool);
+
+    set({
+      currentMonth: nextMonth,
+      currentEvent: nextEvent,
+      settlementInfo: {
+        month: nextMonth,
+        priceChange: displayPriceChange,
+        originalPriceChange: originalPriceChange,
+        profitLoss: totalProfitLoss,
+        newBalance: totalValue
       }
+    });
 
-      // 计算总资产
-      const totalValue = state.balance + state.positions.reduce((sum, p) => {
-        return sum + p.amount * tokens[p.tokenId].currentPrice;
-      }, 0);
-
-      // 检查游戏是否结束
-      if (totalValue <= 0) {
-        set({ isGameOver: true });
-        return;
-      }
-
-      // 进入下一月并显示结算信息
-      const nextEvent = getRandomEvent(tutorialEvents);
-      set({
-        currentMonth: state.currentMonth + 1,
-        currentEvent: nextEvent,
-        settlementInfo: {
-          month: state.currentMonth + 1,
-          priceChange: priceChangePercent * 100,
-          originalPriceChange: originalPriceChange,
-          profitLoss: profitLoss,
-          newBalance: totalValue
-        }
-      });
+    // Trigger phase transition after 12 months
+    if (shouldTransition) {
+      // Will show transition after settlement is closed
+      set({ stage: 'free', unlockedTokens: ['btc', 'eth', 'sol', 'doge'] });
+      // Delay showing transition so settlement shows first
+      setTimeout(() => {
+        get().enterPhase2();
+      }, 100);
     }
   },
 
   // 重置游戏
   resetGame: () => {
-    tokens.btc.currentPrice = 45000; // 重置 BTC 价格
+    // Reset all token prices
+    for (const [id, price] of Object.entries(initialPrices)) {
+      if (tokens[id]) tokens[id].currentPrice = price;
+    }
     get().startGame();
   },
 
   // 跳过教程
   skipTutorial: () => {
-    const nextEvent = getRandomEvent(tutorialEvents);
-    set({
-      stage: 'free', // 进入自由交易阶段
-      currentMonth: 13, // 从第13个月开始（第二阶段）
-      currentEvent: nextEvent,
-      unlockedTokens: ['btc'] // 暂时仍只有 BTC
-    });
+    set({ showingPhaseTransition: true });
   },
 
   // 关闭结算弹窗

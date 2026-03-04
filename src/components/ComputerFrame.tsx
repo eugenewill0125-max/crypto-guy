@@ -36,6 +36,15 @@ export default function ComputerFrame({ children }: ComputerFrameProps) {
               </div>
               
               <div className="bg-primary overflow-y-auto relative z-0" style={{ maxHeight: '70vh' }}>
+                {/* T-tool Logo */}
+                <div className="flex justify-center py-2 bg-primary">
+                  <img
+                    src="/t-tool-logo.jpg"
+                    alt="T-tool"
+                    className="h-12 sm:h-16 border-2 border-black"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                </div>
                 {children}
               </div>
             </div>

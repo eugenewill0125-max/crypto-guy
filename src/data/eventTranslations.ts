@@ -79,5 +79,126 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
       zh: '距离比特币减半还有 3 个月，历史数据显示减半后通常迎来牛市。',
       en: 'Bitcoin halving is 3 months away. Historical data shows bull markets typically follow halvings.'
     }
+  },
+  // Phase 2 events
+  'p2_001': {
+    title: {
+      zh: '以太坊 2.0 升级成功',
+      en: 'Ethereum 2.0 Upgrade Success'
+    },
+    description: {
+      zh: '以太坊完成重大网络升级，交易速度大幅提升，Gas 费用降低 90%。',
+      en: 'Ethereum completes a major network upgrade. Transaction speed increases significantly and gas fees drop by 90%.'
+    }
+  },
+  'p2_002': {
+    title: {
+      zh: 'Meme 币狂潮',
+      en: 'Meme Coin Frenzy'
+    },
+    description: {
+      zh: '社交媒体掀起 Meme 币热潮，DOGE 成为最受欢迎的 Meme 币之一。',
+      en: 'Social media sparks a meme coin craze. DOGE becomes one of the most popular meme coins.'
+    }
+  },
+  'p2_003': {
+    title: {
+      zh: 'Solana 网络宕机',
+      en: 'Solana Network Outage'
+    },
+    description: {
+      zh: 'Solana 网络遭遇严重宕机，持续 12 小时无法处理交易，社区信心受挫。',
+      en: 'Solana network suffers a major outage, unable to process transactions for 12 hours. Community confidence shaken.'
+    }
+  },
+  'p2_004': {
+    title: {
+      zh: '机构大举买入 ETH',
+      en: 'Institutions Buy ETH'
+    },
+    description: {
+      zh: '多家华尔街机构宣布将以太坊纳入投资组合，市场对 ETH 信心大增。',
+      en: 'Multiple Wall Street institutions announce adding Ethereum to their portfolios. Market confidence in ETH surges.'
+    }
+  },
+  'p2_005': {
+    title: {
+      zh: 'Elon Musk 发推支持 DOGE',
+      en: 'Elon Musk Tweets About DOGE'
+    },
+    description: {
+      zh: 'Elon Musk 再次在推特力挺狗狗币，称其为"人民的加密货币"。',
+      en: 'Elon Musk tweets in support of Dogecoin again, calling it "the people\'s cryptocurrency".'
+    }
+  },
+  'p2_006': {
+    title: {
+      zh: 'Solana DeFi 生态爆发',
+      en: 'Solana DeFi Ecosystem Booms'
+    },
+    description: {
+      zh: 'Solana 上多个 DeFi 协议 TVL 暴涨，生态系统活跃度创新高。',
+      en: 'Multiple DeFi protocols on Solana see TVL surge. Ecosystem activity reaches new highs.'
+    }
+  },
+  'p2_007': {
+    title: {
+      zh: '全球加密货币监管收紧',
+      en: 'Global Crypto Regulation Tightens'
+    },
+    description: {
+      zh: 'G20 峰会达成共识，将对加密货币实施更严格的全球监管框架。',
+      en: 'G20 summit reaches consensus on implementing stricter global regulatory framework for cryptocurrencies.'
+    }
+  },
+  'p2_008': {
+    title: {
+      zh: '比特币突破历史新高',
+      en: 'Bitcoin Hits All-Time High'
+    },
+    description: {
+      zh: '比特币价格突破历史新高，带动整个加密市场进入牛市行情。',
+      en: 'Bitcoin breaks its all-time high, driving the entire crypto market into a bull run.'
+    }
+  },
+  'p2_009': {
+    title: {
+      zh: 'NFT 市场回暖',
+      en: 'NFT Market Recovery'
+    },
+    description: {
+      zh: 'NFT 交易量大幅回升，以太坊和 Solana 作为主要 NFT 平台受益。',
+      en: 'NFT trading volume recovers significantly. Ethereum and Solana benefit as major NFT platforms.'
+    }
+  },
+  'p2_010': {
+    title: {
+      zh: 'DOGE 基金会解散',
+      en: 'DOGE Foundation Dissolves'
+    },
+    description: {
+      zh: '狗狗币基金会宣布解散，项目未来发展充满不确定性。',
+      en: 'Dogecoin Foundation announces dissolution. Future development of the project is uncertain.'
+    }
+  },
+  'p2_011': {
+    title: {
+      zh: '以太坊 Layer 2 大规模采用',
+      en: 'Ethereum Layer 2 Mass Adoption'
+    },
+    description: {
+      zh: '多个主流应用宣布迁移到以太坊 Layer 2，链上活跃度飙升。',
+      en: 'Multiple mainstream apps announce migration to Ethereum Layer 2. On-chain activity skyrockets.'
+    }
+  },
+  'p2_012': {
+    title: {
+      zh: '加密市场流动性危机',
+      en: 'Crypto Liquidity Crisis'
+    },
+    description: {
+      zh: '多个做市商撤离加密市场，流动性急剧下降，价格出现剧烈波动。',
+      en: 'Multiple market makers exit the crypto market. Liquidity drops sharply and prices become highly volatile.'
+    }
   }
 };

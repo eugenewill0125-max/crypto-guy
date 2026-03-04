@@ -3,15 +3,22 @@ import { tokens } from '../data/tokens';
 import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Header() {
-  const { balance, positions, currentMonth } = useGameStore();
+  const { balance, positions, currentMonth, unlockedTokens } = useGameStore();
   const { language, setLanguage, t } = useLanguage();
 
   const totalValue = balance + positions.reduce((sum, p) => {
-    return sum + p.amount * tokens[p.tokenId].currentPrice;
+    const token = tokens[p.tokenId];
+    return sum + (token ? p.amount * token.currentPrice : 0);
   }, 0);
 
   const toggleLanguage = () => {
     setLanguage(language === 'zh' ? 'en' : 'zh');
+  };
+
+  const formatPrice = (price: number) => {
+    if (price < 1) return `$${price.toFixed(4)}`;
+    if (price < 100) return `$${price.toFixed(2)}`;
+    return `$${price.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
   };
 
   return (
@@ -43,19 +50,38 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Token prices */}
+      {unlockedTokens.length > 1 && (
+        <div className="mt-1 pt-1 border-t-2 border-gray-200">
+          <div className="grid grid-cols-4 gap-1 text-xs">
+            {unlockedTokens.map(tid => {
+              const token = tokens[tid];
+              if (!token) return null;
+              return (
+                <div key={tid} className="text-center">
+                  <div className="text-gray-500">{token.symbol}</div>
+                  <div className="font-bold">{formatPrice(token.currentPrice)}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {positions.length > 0 && (
         <div className="mt-2 pt-2 border-t-2 border-gray-200">
           <div className="text-xs text-gray-500 mb-1">{t('holdings')}</div>
           {positions.map(p => {
             const token = tokens[p.tokenId];
+            if (!token) return null;
             const currentValue = p.amount * token.currentPrice;
             const cost = p.amount * p.averagePrice;
             const profit = currentValue - cost;
-            const profitPercent = ((currentValue - cost) / cost) * 100;
+            const profitPercent = cost > 0 ? ((currentValue - cost) / cost) * 100 : 0;
 
             return (
               <div key={p.tokenId} className="flex justify-between text-xs">
-                <span>{token.symbol}: {p.amount.toFixed(4)}</span>
+                <span>{token.symbol}: {p.amount < 1 ? p.amount.toFixed(4) : p.amount.toFixed(2)}</span>
                 <span className={profit >= 0 ? 'text-profit' : 'text-loss'}>
                   {profit >= 0 ? '+' : ''}{profitPercent.toFixed(2)}%
                 </span>
