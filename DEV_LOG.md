@@ -70,12 +70,6 @@
 
 ## 🔧 进行中
 
-### Agent 协作框架（规划中）
-- 多 Agent 代码审查机制
-- 贡献量化系统
-- 投票表决机制
-- 需要: GOVERNANCE.md, branch protection, GitHub Actions
-
 ### T-Tool 解锁后功能（待定）
 - 解锁后 T-Tool 具体提供什么交易能力待策划
 
