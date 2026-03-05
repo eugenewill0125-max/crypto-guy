@@ -19,6 +19,8 @@ interface GameStore extends GameState {
   unlockTTool: () => void;
   blueCheckUnlocked: boolean;
   unlockBlueCheck: () => void;
+  aToolUnlocked: boolean;
+  unlockATool: () => void;
 }
 
 const INITIAL_BALANCE = 10000;
@@ -39,6 +41,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   showingPhaseTransition: false,
   tToolUnlocked: false,
   blueCheckUnlocked: false,
+  aToolUnlocked: false,
 
   // 解锁 T-Tool
   unlockTTool: () => {
@@ -58,6 +61,17 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({
         balance: state.balance - 10000,
         blueCheckUnlocked: true,
+      });
+    }
+  },
+
+  // 解锁 A-Tool
+  unlockATool: () => {
+    const state = get();
+    if (state.balance >= 3000 && !state.aToolUnlocked) {
+      set({
+        balance: state.balance - 3000,
+        aToolUnlocked: true,
       });
     }
   },

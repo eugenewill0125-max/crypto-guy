@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import SECChairPanel from './SECChairPanel';
 import TToolPanel from './TToolPanel';
+import AToolPanel from './AToolPanel';
 
 interface ComputerFrameProps {
   children: ReactNode;
@@ -9,9 +10,12 @@ interface ComputerFrameProps {
 export default function ComputerFrame({ children }: ComputerFrameProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 flex flex-col items-center justify-center p-2 sm:p-4 gap-2 sm:gap-4">
-      {/* 顶部面板 - T-Tool 左侧, SEC 右侧 */}
+      {/* 顶部面板 - T-Tool & A-Tool 左侧, SEC 右侧 */}
       <div className="w-full max-w-4xl flex justify-between items-start">
-        <TToolPanel />
+        <div className="flex gap-2">
+          <TToolPanel />
+          <AToolPanel />
+        </div>
         <SECChairPanel />
       </div>
       
