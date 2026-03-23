@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { GameState, TradeAction, Position } from '../types';
-import { getRandomEvent, tutorialEvents, phase2Events } from '../data/events';
+import { getRandomEvent, tutorialEvents, phase2Events, daoEvents, findEventById } from '../data/events';
+import { EventCategory } from '../types';
 import { tokens, initialPrices } from '../data/tokens';
 import { getCurrentSECChair } from '../data/secChairs';
 
@@ -78,6 +79,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   // 开始游戏
   startGame: () => {
+    // Reset all event active states
+    for (const evt of [...tutorialEvents, ...phase2Events, ...daoEvents]) {
+      evt.active = evt.id === 'dao_002' ? false : true;
+    }
     const firstEvent = getRandomEvent(tutorialEvents);
     set({
       currentEvent: firstEvent,
@@ -247,13 +252,31 @@ export const useGameStore = create<GameStore>((set, get) => ({
       displayPriceChange = pct * 100;
     }
 
+    // Deactivate current event and activate chained events
+    if (state.currentEvent) {
+      state.currentEvent.active = false;
+      if (state.currentEvent.activatesEvents) {
+        for (const evtId of state.currentEvent.activatesEvents) {
+          const evt = findEventById(evtId);
+          if (evt) evt.active = true;
+        }
+      }
+    }
+
     // Check if tutorial phase should transition to phase 2
     const nextMonth = state.currentMonth + 1;
     const shouldTransition = state.stage === 'tutorial' && nextMonth > 12;
 
-    // Get next event from appropriate pool
-    const eventPool = (state.stage === 'free' || shouldTransition) ? phase2Events : tutorialEvents;
-    const nextEvent = getRandomEvent(eventPool);
+    // Build unlocked categories based on tool ownership
+    const unlockedCategories: EventCategory[] = ['G'];
+    if (state.tToolUnlocked) unlockedCategories.push('T');
+    if (state.aToolUnlocked) unlockedCategories.push('A');
+
+    // Get next event from appropriate pool (include DAO events in phase 2)
+    const eventPool = (state.stage === 'free' || shouldTransition)
+      ? [...phase2Events, ...daoEvents]
+      : tutorialEvents;
+    const nextEvent = getRandomEvent(eventPool, unlockedCategories);
 
     set({
       currentMonth: nextMonth,
@@ -263,7 +286,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
         priceChange: displayPriceChange,
         originalPriceChange: originalPriceChange,
         profitLoss: totalProfitLoss,
-        newBalance: totalValue
+        newBalance: totalValue,
+        eventId: state.currentEvent?.id
       }
     });
 

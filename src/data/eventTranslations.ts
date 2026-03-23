@@ -1,5 +1,5 @@
 // 事件的中英文翻译
-export const eventTranslations: Record<string, { title: { zh: string; en: string }; description: { zh: string; en: string } }> = {
+export const eventTranslations: Record<string, { title: { zh: string; en: string }; description: { zh: string; en: string }; resultDescription?: { zh: string; en: string } }> = {
   'evt_001': {
     title: {
       zh: '美联储宣布加息',
@@ -199,6 +199,35 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
     description: {
       zh: '多个做市商撤离加密市场，流动性急剧下降，价格出现剧烈波动。',
       en: 'Multiple market makers exit the crypto market. Liquidity drops sharply and prices become highly volatile.'
+    }
+  },
+  // The DAO 事件链
+  'dao_001': {
+    title: {
+      zh: 'The DAO 诞生',
+      en: 'The DAO Launches'
+    },
+    description: {
+      zh: 'The DAO——以太坊上诞生的一个"去中心化自治投资基金"项目正式上线，吸引了大量投资者参与。',
+      en: 'The DAO — a "decentralized autonomous investment fund" project on Ethereum — officially launches, attracting a massive number of investors.'
+    },
+    resultDescription: {
+      zh: 'The DAO 项目的上线为以太坊生态带来了积极影响，ETH 价格小幅上涨。',
+      en: 'The launch of The DAO brought positive momentum to the Ethereum ecosystem, with ETH seeing a modest price increase.'
+    }
+  },
+  'dao_002': {
+    title: {
+      zh: 'The DAO 资金异动',
+      en: 'The DAO Fund Activity'
+    },
+    description: {
+      zh: 'The DAO 智能合约内出现密集的资金分割操作，多个子合约被批量创建。社区对此看法不一：有人认为这是大户正常行使投票退出权，也有人猜测是项目方在进行技术升级测试。',
+      en: 'Intensive fund-splitting operations detected in The DAO smart contract, with multiple child contracts being created in batch. The community is divided: some believe whales are simply exercising their voting exit rights, while others speculate the team is running technical upgrade tests.'
+    },
+    resultDescription: {
+      zh: 'The DAO 智能合约中的"重入漏洞"被黑客利用，约 360 万枚 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。这是真实历史事件。🔗 https://x.com/el33th4xor/status/743819598701674496',
+      en: 'The DAO smart contract\'s "reentrancy vulnerability" was exploited by a hacker, draining ~3.6 million ETH. Panic spread and ETH price crashed. This is a real historical event. 🔗 https://x.com/el33th4xor/status/743819598701674496'
     }
   }
 };

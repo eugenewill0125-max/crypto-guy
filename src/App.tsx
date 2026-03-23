@@ -83,6 +83,7 @@ function GameContent() {
           originalPriceChange={settlementInfo.originalPriceChange}
           profitLoss={settlementInfo.profitLoss}
           newBalance={settlementInfo.newBalance}
+          eventId={settlementInfo.eventId}
           onClose={closeSettlement}
         />
       )}

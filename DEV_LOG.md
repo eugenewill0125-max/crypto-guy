@@ -1,7 +1,44 @@
 # Crypto Guy 开发日志
 
-> 最后更新: 2026-03-05
+> 最后更新: 2026-03-23
 > 维护者: PaoPao 🫧
+
+## 📅 更新记录
+
+### 2026-03-23 — 事件系统重构 + UI 美化 + 交易面板改版
+**分支:** `eugene/event-types-and-dao`
+
+**事件系统重构:**
+- 新增事件类别字段 (`category`): G(全局) / T(需T-Tool) / A(需A-Tool)
+- 新增事件激活字段 (`active`): 仅 active=true 的事件才会被抽取，触发后自动关闭
+- 新增事件链机制 (`activatesEvents`): 事件触发后可自动激活后续事件
+- 新增事件结果字段 (`resultDescription`): 结果在结算弹窗展示，不在新闻中透露
+- 所有已有事件标记为 `category: 'G', active: true`
+
+**The DAO 事件链 (首个事件链):**
+- The DAO 诞生 (G类, ETH+2%) → 触发后激活 The DAO 黑客攻击
+- The DAO 资金异动 (A类, ETH-50%) → 描述故意模糊，玩家难以判断好坏
+- 结算弹窗展示真实历史事件解释 + 推文链接
+
+**UI 美化:**
+- Market News 板块添加像素风背景图 (`public/market-bg.jpg`)
+- A 类事件使用专属背景图 (`public/market-bg-a.jpg`)
+- Trade Operations 板块添加像素风背景图 (`public/trade-bg.jpg`)
+- 买入/卖出按钮颜色偏暖黄，融合背景
+- 输入框和百分比按钮暗色调适配背景
+
+**交易面板改版:**
+- 移除 Hold 按钮
+- 保留 Amount 输入框 + Buy/Sell 按钮（手动输入数量交易）
+- Buy/Sell 悬浮显示 25%/50%/75%/MAX 百分比按钮（按余额/持仓百分比交易）
+- Buy 的 MAX 悬浮变为红色 "ALL IN" 抖动效果
+- 余额/持仓不足时弹出提示
+
+**结算弹窗增强:**
+- 新增「📰 事件结果」区域，展示事件后果解释
+- 支持中英文翻译
+
+---
 
 ## 项目概述
 像素风加密货币模拟交易游戏，React 18 + TypeScript + Vite + Zustand + TailwindCSS

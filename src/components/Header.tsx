@@ -22,11 +22,16 @@ export default function Header() {
   };
 
   return (
-    <div className="bg-white border-4 border-black p-4 space-y-2">
+    <div
+      className="border-4 border-black p-4 space-y-2 bg-cover bg-center relative"
+      style={{ backgroundImage: 'url(/header-bg.jpg)' }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-55" />
+      <div className="relative z-10 space-y-2">
       <div className="flex justify-between items-center">
-        <h1 className="text-xs sm:text-sm">{t('gameTitle')}</h1>
+        <h1 className="text-xs sm:text-sm text-white">{t('gameTitle')}</h1>
         <div className="flex items-center gap-2">
-          <div className="text-xs">{t('month')}: {currentMonth}</div>
+          <div className="text-xs text-gray-200">{t('month')}: {currentMonth}</div>
           <button
             onClick={toggleLanguage}
             className="px-2 py-1 bg-gray-200 border-2 border-black hover:bg-gray-300 text-xs"
@@ -39,11 +44,11 @@ export default function Header() {
       
       <div className="grid grid-cols-2 gap-2 text-xs">
         <div>
-          <div className="text-gray-500">{t('balance')}</div>
-          <div className="font-bold">${balance.toFixed(2)}</div>
+          <div className="text-gray-400">{t('balance')}</div>
+          <div className="font-bold text-white">${balance.toFixed(2)}</div>
         </div>
         <div>
-          <div className="text-gray-500">{t('totalAssets')}</div>
+          <div className="text-gray-400">{t('totalAssets')}</div>
           <div className={`font-bold ${totalValue >= 1000 ? 'text-profit' : 'text-loss'}`}>
             ${totalValue.toFixed(2)}
           </div>
@@ -59,8 +64,8 @@ export default function Header() {
               if (!token) return null;
               return (
                 <div key={tid} className="text-center">
-                  <div className="text-gray-500">{token.symbol}</div>
-                  <div className="font-bold">{formatPrice(token.currentPrice)}</div>
+                  <div className="text-gray-400">{token.symbol}</div>
+                  <div className="font-bold text-white">{formatPrice(token.currentPrice)}</div>
                 </div>
               );
             })}
@@ -70,7 +75,7 @@ export default function Header() {
 
       {positions.length > 0 && (
         <div className="mt-2 pt-2 border-t-2 border-gray-200">
-          <div className="text-xs text-gray-500 mb-1">{t('holdings')}</div>
+          <div className="text-xs text-gray-400 mb-1">{t('holdings')}</div>
           {positions.map(p => {
             const token = tokens[p.tokenId];
             if (!token) return null;
@@ -80,7 +85,7 @@ export default function Header() {
             const profitPercent = cost > 0 ? ((currentValue - cost) / cost) * 100 : 0;
 
             return (
-              <div key={p.tokenId} className="flex justify-between text-xs">
+              <div key={p.tokenId} className="flex justify-between text-xs text-gray-200">
                 <span>{token.symbol}: {p.amount < 1 ? p.amount.toFixed(4) : p.amount.toFixed(2)}</span>
                 <span className={profit >= 0 ? 'text-profit' : 'text-loss'}>
                   {profit >= 0 ? '+' : ''}{profitPercent.toFixed(2)}%
@@ -90,6 +95,7 @@ export default function Header() {
           })}
         </div>
       )}
+      </div>
     </div>
   );
 }
