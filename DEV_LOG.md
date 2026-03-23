@@ -1,7 +1,20 @@
 # Crypto Guy 开发日志
 
-> 最后更新: 2026-03-05
+> 最后更新: 2026-03-23
 > 维护者: PaoPao 🫧
+
+## 📅 更新记录
+
+### 2026-03-23 — 事件类别系统 & The DAO 事件链
+**分支:** `eugene/event-types-and-dao`
+
+- **事件类别字段 (`category`)** — G(全局) / T(需T-Tool) / A(需A-Tool)
+- **事件激活字段 (`active`)** — 仅 active=true 的事件才会被抽取，触发后自动关闭
+- **事件链机制 (`activatesEvents`)** — 事件触发后可自动激活后续事件
+- **The DAO 事件链:** The DAO 诞生(G, ETH+2%) → The DAO 黑客攻击(A, ETH-50%)
+- 所有已有事件标记为 `category: 'G', active: true`
+
+---
 
 ## 项目概述
 像素风加密货币模拟交易游戏，React 18 + TypeScript + Vite + Zustand + TailwindCSS
