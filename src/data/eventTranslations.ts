@@ -1,5 +1,5 @@
 // 事件的中英文翻译
-export const eventTranslations: Record<string, { title: { zh: string; en: string }; description: { zh: string; en: string } }> = {
+export const eventTranslations: Record<string, { title: { zh: string; en: string }; description: { zh: string; en: string }; resultDescription?: { zh: string; en: string } }> = {
   'evt_001': {
     title: {
       zh: '美联储宣布加息',
@@ -199,6 +199,35 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
     description: {
       zh: '多个做市商撤离加密市场，流动性急剧下降，价格出现剧烈波动。',
       en: 'Multiple market makers exit the crypto market. Liquidity drops sharply and prices become highly volatile.'
+    }
+  },
+  // The DAO 事件链
+  'dao_001': {
+    title: {
+      zh: 'The DAO 诞生',
+      en: 'The DAO Launches'
+    },
+    description: {
+      zh: 'The DAO——以太坊上诞生的一个"去中心化自治投资基金"项目正式上线，吸引了大量投资者参与。',
+      en: 'The DAO — a "decentralized autonomous investment fund" project on Ethereum — officially launches, attracting a massive number of investors.'
+    },
+    resultDescription: {
+      zh: 'The DAO 项目的上线为以太坊生态带来了积极影响，ETH 价格小幅上涨。',
+      en: 'The launch of The DAO brought positive momentum to the Ethereum ecosystem, with ETH seeing a modest price increase.'
+    }
+  },
+  'dao_002': {
+    title: {
+      zh: 'The DAO 异常退款请求',
+      en: 'Unusual Refund Requests on The DAO'
+    },
+    description: {
+      zh: '侦测到 The DAO 智能合约内收到大量异常退款请求，链上数据出现可疑活动……',
+      en: 'Unusual refund requests detected in The DAO smart contract. Suspicious on-chain activity observed...'
+    },
+    resultDescription: {
+      zh: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
+      en: 'A vulnerability in The DAO smart contract was exploited by hackers, resulting in 5% of total ETH supply being stolen. Panic spread across the market and ETH price crashed.'
     }
   }
 };

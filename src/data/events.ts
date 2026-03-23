@@ -237,6 +237,7 @@ export const daoEvents: GameEvent[] = [
     active: true,
     title: 'The DAO 诞生',
     description: 'The DAO——以太坊上诞生的一个"去中心化自治投资基金"项目正式上线，吸引了大量投资者参与。',
+    resultDescription: 'The DAO 项目的上线为以太坊生态带来了积极影响，ETH 价格小幅上涨。',
     impacts: [{ tokenId: 'eth', priceChange: 2 }],
     activatesEvents: ['dao_002']
   },
@@ -246,7 +247,8 @@ export const daoEvents: GameEvent[] = [
     category: 'A',
     active: false,
     title: 'The DAO 异常退款请求',
-    description: '侦测到 The DAO 智能合约内收到大量退款请求。The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延。',
+    description: '侦测到 The DAO 智能合约内收到大量异常退款请求，链上数据出现可疑活动……',
+    resultDescription: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
     impacts: [{ tokenId: 'eth', priceChange: -50 }]
   }
 ];

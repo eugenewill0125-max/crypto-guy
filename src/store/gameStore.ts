@@ -286,7 +286,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
         priceChange: displayPriceChange,
         originalPriceChange: originalPriceChange,
         profitLoss: totalProfitLoss,
-        newBalance: totalValue
+        newBalance: totalValue,
+        eventId: state.currentEvent?.id
       }
     });
 

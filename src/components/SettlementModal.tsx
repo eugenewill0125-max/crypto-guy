@@ -1,5 +1,7 @@
 import { useLanguage } from '../i18n/LanguageContext';
 import { getCurrentSECChair } from '../data/secChairs';
+import { eventTranslations } from '../data/eventTranslations';
+import { findEventById } from '../data/events';
 
 interface SettlementModalProps {
   month: number;
@@ -7,6 +9,7 @@ interface SettlementModalProps {
   originalPriceChange: number;
   profitLoss: number;
   newBalance: number;
+  eventId?: string;
   onClose: () => void;
 }
 
@@ -16,10 +19,23 @@ export default function SettlementModal({
   originalPriceChange,
   profitLoss, 
   newBalance,
+  eventId,
   onClose 
 }: SettlementModalProps) {
   const { language } = useLanguage();
   const secChair = getCurrentSECChair(month - 1); // 上个月的主席
+
+  // 获取事件结果解释
+  let eventResultText: string | undefined;
+  if (eventId) {
+    const translation = eventTranslations[eventId];
+    if (translation?.resultDescription) {
+      eventResultText = translation.resultDescription[language];
+    } else {
+      const evt = findEventById(eventId);
+      eventResultText = evt?.resultDescription;
+    }
+  }
 
   return (
     <div 
@@ -82,6 +98,18 @@ export default function SettlementModal({
             </span>
           </div>
         </div>
+
+        {/* 事件结果解释 */}
+        {eventResultText && (
+          <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-3 mb-4">
+            <div className="text-xs font-bold mb-1">
+              {language === 'zh' ? '📰 事件结果' : '📰 Event Outcome'}
+            </div>
+            <p className="text-xs text-gray-700 leading-relaxed">
+              {eventResultText}
+            </p>
+          </div>
+        )}
 
         {/* 继续按钮 */}
         <button
