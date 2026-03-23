@@ -33,20 +33,28 @@ export default function EventCard() {
   const description = eventText ? eventText.description[language] : currentEvent.description;
 
   return (
-    <div className="bg-white border-4 border-black p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <span className="px-2 py-1 bg-gray-200 text-xs">
-          {getEventTypeLabel(currentEvent.type)}
-        </span>
+    <div
+      className="border-4 border-black p-4 space-y-3 bg-cover bg-center relative"
+      style={{ backgroundImage: 'url(/market-bg.jpg)' }}
+    >
+      {/* 半透明遮罩确保文字可读 */}
+      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      
+      <div className="relative z-10">
+        <div className="flex items-center justify-between">
+          <span className="px-2 py-1 bg-gray-200 bg-opacity-80 text-xs">
+            {getEventTypeLabel(currentEvent.type)}
+          </span>
+        </div>
+
+        <h2 className="text-sm font-bold leading-relaxed text-white">
+          {title}
+        </h2>
+
+        <p className="text-xs leading-relaxed text-gray-200">
+          {description}
+        </p>
       </div>
-
-      <h2 className="text-sm font-bold leading-relaxed">
-        {title}
-      </h2>
-
-      <p className="text-xs leading-relaxed text-gray-700">
-        {description}
-      </p>
     </div>
   );
 }
