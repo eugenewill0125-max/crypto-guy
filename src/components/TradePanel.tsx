@@ -132,7 +132,7 @@ export default function TradePanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <button
           onClick={handleBuy}
           className="text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
@@ -146,12 +146,6 @@ export default function TradePanel() {
           style={{ backgroundColor: '#a84632' }}
         >
           {t('sell')}
-        </button>
-        <button
-          onClick={handleIdle}
-          className="bg-gray-400 text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
-        >
-          {t('hold')}
         </button>
       </div>
 
