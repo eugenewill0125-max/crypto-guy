@@ -27,6 +27,7 @@ export default function SettlementModal({
 
   // 获取事件结果解释
   let eventResultText: string | undefined;
+  let eventSourceUrl: string | undefined;
   if (eventId) {
     const translation = eventTranslations[eventId];
     if (translation?.resultDescription) {
@@ -35,6 +36,8 @@ export default function SettlementModal({
       const evt = findEventById(eventId);
       eventResultText = evt?.resultDescription;
     }
+    const evt = findEventById(eventId);
+    eventSourceUrl = evt?.sourceUrl;
   }
 
   return (
@@ -107,6 +110,19 @@ export default function SettlementModal({
             </div>
             <p className="text-xs text-gray-700 leading-relaxed">
               {eventResultText}
+              {eventSourceUrl && (
+                <>
+                  {' '}
+                  <a
+                    href={eventSourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
+                    {language === 'zh' ? '这是真实历史事件' : 'This is a real historical event'}
+                  </a>
+                </>
+              )}
             </p>
           </div>
         )}

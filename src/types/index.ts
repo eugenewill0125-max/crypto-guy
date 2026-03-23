@@ -44,6 +44,8 @@ export interface GameEvent {
   activatesEvents?: string[];
   // 事件结果解释（结算时展示，不在新闻中透露）
   resultDescription?: string;
+  // 真实事件来源链接
+  sourceUrl?: string;
 }
 
 // 交易记录
