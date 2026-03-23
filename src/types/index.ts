@@ -22,6 +22,9 @@ export interface Position {
 // 事件类型
 export type EventType = 'basic' | 'onchain' | 'kol';
 
+// 事件类别: G=全局, T=需T-Tool, A=需A-Tool
+export type EventCategory = 'G' | 'T' | 'A';
+
 // 事件影响
 export interface EventImpact {
   tokenId: string;
@@ -32,9 +35,13 @@ export interface EventImpact {
 export interface GameEvent {
   id: string;
   type: EventType;
+  category: EventCategory;
+  active: boolean;
   title: string;
   description: string;
   impacts: EventImpact[];
+  // 触发后激活的事件ID列表
+  activatesEvents?: string[];
 }
 
 // 交易记录
