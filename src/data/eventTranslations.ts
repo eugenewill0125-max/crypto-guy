@@ -226,8 +226,8 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
       en: 'Intensive fund-splitting operations detected in The DAO smart contract, with multiple child contracts being created in batch. The community is divided: some believe whales are simply exercising their voting exit rights, while others speculate the team is running technical upgrade tests.'
     },
     resultDescription: {
-      zh: 'The DAO 智能合约中的"重入漏洞"被黑客利用，约 360 万枚 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。这是真实历史事件。🔗 https://x.com/el33th4xor/status/743819598701674496',
-      en: 'The DAO smart contract\'s "reentrancy vulnerability" was exploited by a hacker, draining ~3.6 million ETH. Panic spread and ETH price crashed. This is a real historical event. 🔗 https://x.com/el33th4xor/status/743819598701674496'
+      zh: 'The DAO 智能合约中的"重入漏洞"被黑客利用，约 360 万枚 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
+      en: 'The DAO smart contract\'s "reentrancy vulnerability" was exploited by a hacker, draining ~3.6 million ETH. Panic spread and ETH price crashed.'
     }
   }
 };
