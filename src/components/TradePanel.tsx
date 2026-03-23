@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { tokens } from '../data/tokens';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -14,13 +14,30 @@ export default function TradePanel() {
   const { t, language } = useLanguage();
   const [amount, setAmount] = useState<string>('0.01');
   const [selectedToken, setSelectedToken] = useState<string>('btc');
-  const [buyHover, setBuyHover] = useState(false);
-  const [sellHover, setSellHover] = useState(false);
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [sellOpen, setSellOpen] = useState(false);
   const [allInHover, setAllInHover] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
+  const buyRef = useRef<HTMLDivElement>(null);
+  const sellRef = useRef<HTMLDivElement>(null);
 
   const showToast = useCallback((message: string, type: 'success' | 'error' | 'info') => {
     setToast({ message, type });
+  }, []);
+
+  // Close panels when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (buyRef.current && !buyRef.current.contains(e.target as Node)) {
+        setBuyOpen(false);
+        setAllInHover(false);
+      }
+      if (sellRef.current && !sellRef.current.contains(e.target as Node)) {
+        setSellOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const token = tokens[selectedToken];
@@ -51,8 +68,8 @@ export default function TradePanel() {
 
   const insufficientBalance = language === 'zh' ? '余额不足！' : 'Insufficient balance!';
   const insufficientHoldings = language === 'zh' ? '持仓不足！' : 'Insufficient holdings!';
-  const buySuccess = (amt: string, sym: string) => language === 'zh' ? `成功买入 ${amt} ${sym}` : `Bought ${amt} ${sym}`;
-  const sellSuccess = (amt: string, sym: string) => language === 'zh' ? `成功卖出 ${amt} ${sym}` : `Sold ${amt} ${sym}`;
+  const buySuccessMsg = (amt: string, sym: string) => language === 'zh' ? `成功买入 ${amt} ${sym}` : `Bought ${amt} ${sym}`;
+  const sellSuccessMsg = (amt: string, sym: string) => language === 'zh' ? `成功卖出 ${amt} ${sym}` : `Sold ${amt} ${sym}`;
 
   const handleBuy = () => {
     const amt = parseFloat(amount);
@@ -60,7 +77,7 @@ export default function TradePanel() {
     const cost = amt * currentPrice;
     if (cost > balance) { showToast(insufficientBalance, 'error'); return; }
     executeTrade('buy', amt, selectedToken);
-    showToast(buySuccess(formatAmount(amt), token?.symbol || ''), 'success');
+    showToast(buySuccessMsg(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleSell = () => {
@@ -68,7 +85,7 @@ export default function TradePanel() {
     if (isNaN(amt) || amt <= 0) { showToast(t('invalidAmount'), 'error'); return; }
     if (amt > maxSell) { showToast(insufficientHoldings, 'error'); return; }
     executeTrade('sell', amt, selectedToken);
-    showToast(sellSuccess(formatAmount(amt), token?.symbol || ''), 'success');
+    showToast(sellSuccessMsg(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleBuyPct = (pct: number) => {
@@ -76,7 +93,7 @@ export default function TradePanel() {
     if (amt <= 0) { showToast(insufficientBalance, 'error'); return; }
     const finalAmt = parseFloat(formatAmount(amt));
     executeTrade('buy', finalAmt, selectedToken);
-    showToast(buySuccess(formatAmount(amt), token?.symbol || ''), 'success');
+    showToast(buySuccessMsg(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleSellPct = (pct: number) => {
@@ -84,7 +101,27 @@ export default function TradePanel() {
     if (amt <= 0) { showToast(insufficientHoldings, 'error'); return; }
     const finalAmt = parseFloat(formatAmount(amt));
     executeTrade('sell', finalAmt, selectedToken);
-    showToast(sellSuccess(formatAmount(amt), token?.symbol || ''), 'success');
+    showToast(sellSuccessMsg(formatAmount(amt), token?.symbol || ''), 'success');
+  };
+
+  // Buy button click: if panel closed → open panel; if panel open → execute buy by amount
+  const handleBuyClick = () => {
+    if (!buyOpen) {
+      setBuyOpen(true);
+      setSellOpen(false);
+    } else {
+      handleBuy();
+    }
+  };
+
+  // Sell button click: if panel closed → open panel; if panel open → execute sell by amount
+  const handleSellClick = () => {
+    if (!sellOpen) {
+      setSellOpen(true);
+      setBuyOpen(false);
+    } else {
+      handleSell();
+    }
   };
 
   const pctOptions = [0.25, 0.5, 0.75, 1];
@@ -154,12 +191,12 @@ export default function TradePanel() {
         />
       </div>
 
-      {/* Buy Button - click to buy by amount, hover for % */}
-      <div className="relative"
-        onMouseEnter={() => setBuyHover(true)}
-        onMouseLeave={() => { setBuyHover(false); setAllInHover(false); }}
+      {/* Buy Button + % panel */}
+      <div className="relative" ref={buyRef}
+        onMouseEnter={() => setBuyOpen(true)}
+        onMouseLeave={() => { setBuyOpen(false); setAllInHover(false); }}
       >
-        {buyHover && (
+        {buyOpen && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
             {pctOptions.map(pct => {
               const isMax = pct === 1;
@@ -167,9 +204,10 @@ export default function TradePanel() {
               return (
                 <button
                   key={pct}
-                  onClick={() => handleBuyPct(pct)}
+                  onClick={(e) => { e.stopPropagation(); handleBuyPct(pct); }}
                   onMouseEnter={() => isMax && setAllInHover(true)}
                   onMouseLeave={() => isMax && setAllInHover(false)}
+                  onTouchStart={() => isMax && setAllInHover(true)}
                   className={`flex-1 py-1 text-xs font-bold border border-gray-600 transition-all ${
                     isAllIn
                       ? 'text-white'
@@ -187,7 +225,7 @@ export default function TradePanel() {
           </div>
         )}
         <button
-          onClick={handleBuy}
+          onClick={handleBuyClick}
           className="w-full text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
           style={{ backgroundColor: '#5a8a3c' }}
         >
@@ -195,17 +233,17 @@ export default function TradePanel() {
         </button>
       </div>
 
-      {/* Sell Button - click to sell by amount, hover for % */}
-      <div className="relative"
-        onMouseEnter={() => setSellHover(true)}
-        onMouseLeave={() => setSellHover(false)}
+      {/* Sell Button + % panel */}
+      <div className="relative" ref={sellRef}
+        onMouseEnter={() => setSellOpen(true)}
+        onMouseLeave={() => setSellOpen(false)}
       >
-        {sellHover && (
+        {sellOpen && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
             {pctOptions.map(pct => (
               <button
                 key={pct}
-                onClick={() => handleSellPct(pct)}
+                onClick={(e) => { e.stopPropagation(); handleSellPct(pct); }}
                 className="flex-1 py-1 text-xs font-bold border border-gray-600 bg-gray-800 bg-opacity-90 text-gray-200 hover:bg-gray-700 transition-all"
               >
                 {pct === 1 ? 'MAX' : `${pct * 100}%`}
@@ -214,7 +252,7 @@ export default function TradePanel() {
           </div>
         )}
         <button
-          onClick={handleSell}
+          onClick={handleSellClick}
           className="w-full text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
           style={{ backgroundColor: '#a84632' }}
         >
