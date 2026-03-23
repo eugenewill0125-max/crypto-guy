@@ -5,7 +5,8 @@ import { useLanguage } from '../i18n/LanguageContext';
 
 export default function TradePanel() {
   const { executeTrade, endMonth, balance, positions, unlockedTokens } = useGameStore();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [amount, setAmount] = useState<string>('0.01');
   const [selectedToken, setSelectedToken] = useState<string>('btc');
   const [buyHover, setBuyHover] = useState(false);
   const [sellHover, setSellHover] = useState(false);
@@ -17,11 +18,17 @@ export default function TradePanel() {
   const maxBuy = currentPrice > 0 ? balance / currentPrice : 0;
   const maxSell = position?.amount || 0;
 
-  // Format price display based on magnitude
   const formatPrice = (price: number) => {
     if (price < 1) return `$${price.toFixed(4)}`;
     if (price < 100) return `$${price.toFixed(2)}`;
     return `$${price.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+  };
+
+  const getStep = () => {
+    if (currentPrice > 10000) return '0.01';
+    if (currentPrice > 100) return '0.1';
+    if (currentPrice > 1) return '1';
+    return '100';
   };
 
   const formatAmount = (val: number) => {
@@ -31,15 +38,30 @@ export default function TradePanel() {
     return val.toFixed(0);
   };
 
+  const handleBuy = () => {
+    const amt = parseFloat(amount);
+    if (isNaN(amt) || amt <= 0) { alert(t('invalidAmount')); return; }
+    const cost = amt * currentPrice;
+    if (cost > balance) { alert(language === 'zh' ? '余额不足！' : 'Insufficient balance!'); return; }
+    executeTrade('buy', amt, selectedToken);
+  };
+
+  const handleSell = () => {
+    const amt = parseFloat(amount);
+    if (isNaN(amt) || amt <= 0) { alert(t('invalidAmount')); return; }
+    if (amt > maxSell) { alert(language === 'zh' ? '持仓不足！' : 'Insufficient holdings!'); return; }
+    executeTrade('sell', amt, selectedToken);
+  };
+
   const handleBuyPct = (pct: number) => {
     const amt = maxBuy * pct;
-    if (amt <= 0) return;
+    if (amt <= 0) { alert(language === 'zh' ? '余额不足！' : 'Insufficient balance!'); return; }
     executeTrade('buy', parseFloat(formatAmount(amt)), selectedToken);
   };
 
   const handleSellPct = (pct: number) => {
     const amt = maxSell * pct;
-    if (amt <= 0) return;
+    if (amt <= 0) { alert(language === 'zh' ? '持仓不足！' : 'Insufficient holdings!'); return; }
     executeTrade('sell', parseFloat(formatAmount(amt)), selectedToken);
   };
 
@@ -64,7 +86,10 @@ export default function TradePanel() {
             return (
               <button
                 key={tid}
-                onClick={() => setSelectedToken(tid)}
+                onClick={() => {
+                  setSelectedToken(tid);
+                  setAmount(getStep());
+                }}
                 className={`px-3 py-1 text-xs border-2 border-black transition-colors ${
                   isSelected
                     ? 'bg-black text-primary'
@@ -93,7 +118,39 @@ export default function TradePanel() {
         </div>
       </div>
 
-      {/* Buy Button with hover percentages */}
+      {/* Amount Input */}
+      <div className="space-y-2">
+        <label className="block text-xs text-gray-200">{t('tradeAmount')} ({token?.symbol})</label>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          step={getStep()}
+          min="0"
+          className="w-full border-2 border-gray-600 p-2 text-xs text-gray-200 bg-black bg-opacity-40"
+          placeholder={getStep()}
+        />
+      </div>
+
+      {/* Buy/Sell manual buttons */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={handleBuy}
+          className="text-white p-2 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#5a8a3c' }}
+        >
+          {t('buy')}
+        </button>
+        <button
+          onClick={handleSell}
+          className="text-white p-2 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#a84632' }}
+        >
+          {t('sell')}
+        </button>
+      </div>
+
+      {/* Buy % with hover percentages */}
       <div className="relative"
         onMouseEnter={() => setBuyHover(true)}
         onMouseLeave={() => { setBuyHover(false); setAllInHover(false); }}
@@ -102,7 +159,7 @@ export default function TradePanel() {
           className="w-full text-white p-3 text-xs border-2 border-black transition-all"
           style={{ backgroundColor: '#5a8a3c' }}
         >
-          {t('buy')}
+          {language === 'zh' ? '快捷买入' : 'Quick Buy'}
         </button>
         {buyHover && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
@@ -117,9 +174,13 @@ export default function TradePanel() {
                   onMouseLeave={() => isMax && setAllInHover(false)}
                   className={`flex-1 py-1 text-xs font-bold border border-gray-600 transition-all ${
                     isAllIn
-                      ? 'bg-red-600 text-white animate-shake'
+                      ? 'text-white'
                       : 'bg-gray-800 bg-opacity-90 text-gray-200 hover:bg-gray-700'
                   }`}
+                  style={isAllIn ? {
+                    backgroundColor: '#dc2626',
+                    animation: 'shake 0.4s ease-in-out infinite',
+                  } : undefined}
                 >
                   {isAllIn ? 'ALL IN' : isMax ? 'MAX' : `${pct * 100}%`}
                 </button>
@@ -129,7 +190,7 @@ export default function TradePanel() {
         )}
       </div>
 
-      {/* Sell Button with hover percentages */}
+      {/* Sell % with hover percentages */}
       <div className="relative"
         onMouseEnter={() => setSellHover(true)}
         onMouseLeave={() => setSellHover(false)}
@@ -138,7 +199,7 @@ export default function TradePanel() {
           className="w-full text-white p-3 text-xs border-2 border-black transition-all"
           style={{ backgroundColor: '#a84632' }}
         >
-          {t('sell')}
+          {language === 'zh' ? '快捷卖出' : 'Quick Sell'}
         </button>
         {sellHover && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
