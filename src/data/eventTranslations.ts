@@ -222,8 +222,8 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
       en: 'Unusual Refund Requests on The DAO'
     },
     description: {
-      zh: '侦测到 The DAO 智能合约内收到大量异常退款请求，链上数据出现可疑活动……',
-      en: 'Unusual refund requests detected in The DAO smart contract. Suspicious on-chain activity observed...'
+      zh: 'The DAO 智能合约内出现异常活跃的资金流动，大量资金正在被快速转移……',
+      en: 'Unusually active fund movements detected in The DAO smart contract. Large amounts of capital are being rapidly transferred...'
     },
     resultDescription: {
       zh: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',

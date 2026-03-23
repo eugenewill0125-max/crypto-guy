@@ -247,7 +247,7 @@ export const daoEvents: GameEvent[] = [
     category: 'A',
     active: false,
     title: 'The DAO 异常退款请求',
-    description: '侦测到 The DAO 智能合约内收到大量异常退款请求，链上数据出现可疑活动……',
+    description: 'The DAO 智能合约内出现异常活跃的资金流动，大量资金正在被快速转移……',
     resultDescription: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
     impacts: [{ tokenId: 'eth', priceChange: -50 }]
   }
