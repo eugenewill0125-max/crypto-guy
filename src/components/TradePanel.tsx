@@ -135,13 +135,15 @@ export default function TradePanel() {
       <div className="grid grid-cols-3 gap-2">
         <button
           onClick={handleBuy}
-          className="bg-profit text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          className="text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#5a8a3c' }}
         >
           {t('buy')}
         </button>
         <button
           onClick={handleSell}
-          className="bg-loss text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          className="text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#a84632' }}
         >
           {t('sell')}
         </button>
@@ -155,7 +157,8 @@ export default function TradePanel() {
 
       <button
         onClick={endMonth}
-        className="w-full bg-black text-primary p-3 text-xs border-2 border-black hover:bg-gray-800"
+        className="w-full text-primary p-3 text-xs border-2 border-black hover:brightness-110"
+        style={{ backgroundColor: '#2a2a2a' }}
       >
         {t('endMonth')}
       </button>
