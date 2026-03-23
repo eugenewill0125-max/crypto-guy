@@ -8,7 +8,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '美联储宣布加息',
-    description: '美联储宣布将基准利率上调 0.5%，市场对此反应强烈，投资者开始寻求避险资产。',
+    description: '美联储宣布将基准利率上调 0.5%，市场对此反应不一。部分分析师认为这将稳定经济预期，也有人担忧流动性收紧的影响。',
     impacts: [{ tokenId: 'btc', priceChange: -8 }]
   },
   {
@@ -17,7 +17,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'Tesla 宣布接受 BTC 支付',
-    description: 'Elon Musk 在 Twitter 上宣布 Tesla 将重新接受比特币作为支付方式，市场情绪高涨。',
+    description: 'Elon Musk 在 Twitter 上宣布 Tesla 将重新接受比特币作为支付方式。支持者认为这是主流采用的信号，批评者则质疑此举的持续性和实际影响。',
     impacts: [{ tokenId: 'btc', priceChange: 12 }]
   },
   {
@@ -26,7 +26,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '中国加强加密货币监管',
-    description: '中国政府发布新规，加强对加密货币交易的监管，多家交易所暂停服务。',
+    description: '中国政府发布新规，加强对加密货币交易的监管，多家交易所暂停服务。有观点认为监管将净化市场环境，也有人担心短期内对交易活动造成冲击。',
     impacts: [{ tokenId: 'btc', priceChange: -15 }]
   },
   {
@@ -35,7 +35,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'MicroStrategy 再次购入 BTC',
-    description: 'MicroStrategy CEO 宣布公司再次购入价值 5 亿美元的比特币，表示对 BTC 长期价值的信心。',
+    description: 'MicroStrategy CEO 宣布公司再次购入价值 5 亿美元的比特币。有人将此视为机构信心的体现，也有分析师认为过度集中持仓带来了新的风险。',
     impacts: [{ tokenId: 'btc', priceChange: 10 }]
   },
   {
@@ -44,7 +44,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '市场横盘震荡',
-    description: '加密市场进入盘整期，交易量萎缩，投资者持观望态度。',
+    description: '加密市场进入盘整期，交易量明显下降。部分交易员认为这是暴风雨前的平静，也有人认为市场正在寻找新的方向。',
     impacts: [{ tokenId: 'btc', priceChange: -2 }]
   },
   {
@@ -53,7 +53,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '比特币 ETF 获批',
-    description: '美国 SEC 批准首个比特币现货 ETF，机构资金开始涌入。',
+    description: '美国 SEC 批准首个比特币现货 ETF。乐观者认为这将打开机构入场的大门，谨慎派则担忧监管套利和市场过热风险。',
     impacts: [{ tokenId: 'btc', priceChange: 18 }]
   },
   {
@@ -62,7 +62,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '大型交易所被黑客攻击',
-    description: '某大型交易所遭受黑客攻击，价值 2 亿美元的加密资产被盗，市场恐慌情绪蔓延。',
+    description: '某大型交易所遭受黑客攻击，价值 2 亿美元的加密资产被盗。部分投资者担忧安全问题，但也有人指出历史上类似事件往往推动行业加强安全基础设施建设。',
     impacts: [{ tokenId: 'btc', priceChange: -12 }]
   },
   {
@@ -71,7 +71,7 @@ export const tutorialEvents: GameEvent[] = [
     category: 'G',
     active: true,
     title: '比特币减半临近',
-    description: '距离比特币减半还有 3 个月，历史数据显示减半后通常迎来牛市。',
+    description: '距离比特币减半还有 3 个月。历史上减半前后行情走势各异，市场对本次减半的影响存在分歧。',
     impacts: [{ tokenId: 'btc', priceChange: 15 }]
   }
 ];
@@ -84,7 +84,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '以太坊 2.0 升级成功',
-    description: '以太坊完成重大网络升级，交易速度大幅提升，Gas 费用降低 90%。',
+    description: '以太坊完成重大网络升级，交易速度和 Gas 费用均有显著变化。社区对升级的长期效果看法不一，部分开发者对新架构的稳定性持保留态度。',
     impacts: [
       { tokenId: 'eth', priceChange: 15 },
       { tokenId: 'btc', priceChange: 3 }
@@ -96,7 +96,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'Meme 币狂潮',
-    description: '社交媒体掀起 Meme 币热潮，DOGE 成为最受欢迎的 Meme 币之一。',
+    description: '社交媒体上 Meme 币相关讨论量激增，DOGE 成为话题焦点。有人认为这代表社区文化的力量，也有人警告投机情绪过浓。',
     impacts: [
       { tokenId: 'doge', priceChange: 25 },
       { tokenId: 'btc', priceChange: -2 }
@@ -108,7 +108,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'Solana 网络宕机',
-    description: 'Solana 网络遭遇严重宕机，持续 12 小时无法处理交易，社区信心受挫。',
+    description: 'Solana 网络出现中断，持续约 12 小时无法处理交易。团队迅速发布了修复方案，但社区对网络稳定性的讨论再度升温。',
     impacts: [
       { tokenId: 'sol', priceChange: -20 }
     ]
@@ -119,7 +119,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '机构大举买入 ETH',
-    description: '多家华尔街机构宣布将以太坊纳入投资组合，市场对 ETH 信心大增。',
+    description: '多家华尔街机构宣布将以太坊纳入投资组合。支持者认为这标志着 ETH 获得主流认可，批评者则认为机构入场可能改变市场结构。',
     impacts: [
       { tokenId: 'eth', priceChange: 12 },
       { tokenId: 'sol', priceChange: 5 }
@@ -131,7 +131,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'Elon Musk 发推支持 DOGE',
-    description: 'Elon Musk 再次在推特力挺狗狗币，称其为"人民的加密货币"。',
+    description: 'Elon Musk 再次在推特提及狗狗币，称其为"人民的加密货币"。市场对名人效应的持续性和实际价值意见不一。',
     impacts: [
       { tokenId: 'doge', priceChange: 30 },
       { tokenId: 'btc', priceChange: -3 }
@@ -143,7 +143,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'Solana DeFi 生态爆发',
-    description: 'Solana 上多个 DeFi 协议 TVL 暴涨，生态系统活跃度创新高。',
+    description: 'Solana 上多个 DeFi 协议 TVL 出现大幅变动，生态系统活跃度引发关注。有人认为这是生态成熟的标志，也有人质疑资金流入的可持续性。',
     impacts: [
       { tokenId: 'sol', priceChange: 18 },
       { tokenId: 'eth', priceChange: -4 }
@@ -155,7 +155,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '全球加密货币监管收紧',
-    description: 'G20 峰会达成共识，将对加密货币实施更严格的全球监管框架。',
+    description: 'G20 峰会达成共识，将制定统一的全球加密货币监管框架。部分业内人士认为清晰的规则有助于行业发展，也有人担忧合规成本将大幅增加。',
     impacts: [
       { tokenId: 'btc', priceChange: -10 },
       { tokenId: 'eth', priceChange: -8 },
@@ -169,7 +169,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '比特币突破历史新高',
-    description: '比特币价格突破历史新高，带动整个加密市场进入牛市行情。',
+    description: '比特币价格触及历史新高区域，交易量显著放大。有分析师认为突破将打开上行空间，也有人警告获利盘可能随时涌出。',
     impacts: [
       { tokenId: 'btc', priceChange: 20 },
       { tokenId: 'eth', priceChange: 10 },
@@ -183,7 +183,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'NFT 市场回暖',
-    description: 'NFT 交易量大幅回升，以太坊和 Solana 作为主要 NFT 平台受益。',
+    description: 'NFT 交易量出现明显回升，以太坊和 Solana 是主要交易平台。市场对 NFT 复苏的持续性看法不一，部分观察者认为这只是短期波动。',
     impacts: [
       { tokenId: 'eth', priceChange: 8 },
       { tokenId: 'sol', priceChange: 10 }
@@ -195,7 +195,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: 'DOGE 基金会解散',
-    description: '狗狗币基金会宣布解散，项目未来发展充满不确定性。',
+    description: '狗狗币基金会宣布解散，项目治理结构将发生变化。有人认为去中心化社区将接管发展方向，也有人对项目的组织协调能力表示担忧。',
     impacts: [
       { tokenId: 'doge', priceChange: -18 }
     ]
@@ -206,7 +206,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '以太坊 Layer 2 大规模采用',
-    description: '多个主流应用宣布迁移到以太坊 Layer 2，链上活跃度飙升。',
+    description: '多个主流应用宣布迁移到以太坊 Layer 2，链上活跃度出现显著变化。有人认为这将巩固以太坊生态地位，也有人担心 Layer 2 碎片化问题加剧。',
     impacts: [
       { tokenId: 'eth', priceChange: 14 },
       { tokenId: 'btc', priceChange: 2 }
@@ -218,7 +218,7 @@ export const phase2Events: GameEvent[] = [
     category: 'G',
     active: true,
     title: '加密市场流动性危机',
-    description: '多个做市商撤离加密市场，流动性急剧下降，价格出现剧烈波动。',
+    description: '多个做市商调整加密市场策略，市场流动性出现结构性变化。部分交易员认为这将带来更多套利机会，也有人对价格波动加剧表示警惕。',
     impacts: [
       { tokenId: 'btc', priceChange: -7 },
       { tokenId: 'eth', priceChange: -9 },
