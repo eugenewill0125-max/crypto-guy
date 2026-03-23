@@ -32,10 +32,12 @@ export default function EventCard() {
   const title = eventText ? eventText.title[language] : currentEvent.title;
   const description = eventText ? eventText.description[language] : currentEvent.description;
 
+  const bgImage = currentEvent.category === 'A' ? '/market-bg-a.jpg' : '/market-bg.jpg';
+
   return (
     <div
       className="border-4 border-black p-4 space-y-3 bg-cover bg-center relative"
-      style={{ backgroundImage: 'url(/market-bg.jpg)' }}
+      style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* 半透明遮罩确保文字可读 */}
       <div className="absolute inset-0 bg-black bg-opacity-60" />
