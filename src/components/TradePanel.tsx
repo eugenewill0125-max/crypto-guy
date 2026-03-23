@@ -132,35 +132,11 @@ export default function TradePanel() {
         />
       </div>
 
-      {/* Buy/Sell manual buttons */}
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          onClick={handleBuy}
-          className="text-white p-2 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
-          style={{ backgroundColor: '#5a8a3c' }}
-        >
-          {t('buy')}
-        </button>
-        <button
-          onClick={handleSell}
-          className="text-white p-2 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
-          style={{ backgroundColor: '#a84632' }}
-        >
-          {t('sell')}
-        </button>
-      </div>
-
-      {/* Buy % with hover percentages */}
+      {/* Buy Button - click to buy by amount, hover for % */}
       <div className="relative"
         onMouseEnter={() => setBuyHover(true)}
         onMouseLeave={() => { setBuyHover(false); setAllInHover(false); }}
       >
-        <button
-          className="w-full text-white p-3 text-xs border-2 border-black transition-all"
-          style={{ backgroundColor: '#5a8a3c' }}
-        >
-          {language === 'zh' ? '快捷买入' : 'Quick Buy'}
-        </button>
         {buyHover && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
             {pctOptions.map(pct => {
@@ -188,19 +164,20 @@ export default function TradePanel() {
             })}
           </div>
         )}
+        <button
+          onClick={handleBuy}
+          className="w-full text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#5a8a3c' }}
+        >
+          {t('buy')}
+        </button>
       </div>
 
-      {/* Sell % with hover percentages */}
+      {/* Sell Button - click to sell by amount, hover for % */}
       <div className="relative"
         onMouseEnter={() => setSellHover(true)}
         onMouseLeave={() => setSellHover(false)}
       >
-        <button
-          className="w-full text-white p-3 text-xs border-2 border-black transition-all"
-          style={{ backgroundColor: '#a84632' }}
-        >
-          {language === 'zh' ? '快捷卖出' : 'Quick Sell'}
-        </button>
         {sellHover && (
           <div className="absolute left-0 right-0 bottom-full flex gap-0">
             {pctOptions.map(pct => (
@@ -214,6 +191,13 @@ export default function TradePanel() {
             ))}
           </div>
         )}
+        <button
+          onClick={handleSell}
+          className="w-full text-white p-3 text-xs border-2 border-black hover:brightness-110 active:brightness-90"
+          style={{ backgroundColor: '#a84632' }}
+        >
+          {t('sell')}
+        </button>
       </div>
 
       <button
