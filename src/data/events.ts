@@ -248,7 +248,7 @@ export const daoEvents: GameEvent[] = [
     active: false,
     title: 'The DAO 资金异动',
     description: 'The DAO 智能合约内出现密集的资金分割操作，多个子合约被批量创建。社区对此看法不一：有人认为这是大户正常行使投票退出权，也有人猜测是项目方在进行技术升级测试。',
-    resultDescription: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
+    resultDescription: 'The DAO 智能合约中的"重入漏洞"被黑客利用，约 360 万枚 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。这是真实历史事件。🔗 https://x.com/el33th4xor/status/743819598701674496',
     impacts: [{ tokenId: 'eth', priceChange: -50 }]
   }
 ];
