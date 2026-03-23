@@ -116,7 +116,7 @@ export default function TradePanel() {
           onChange={(e) => setAmount(e.target.value)}
           step={getStep()}
           min="0"
-          className="w-full border-2 border-black p-2 text-xs"
+          className="w-full border-2 border-gray-600 p-2 text-xs text-gray-200 bg-black bg-opacity-40"
           placeholder={getStep()}
         />
         <div className="flex gap-2 text-xs">
@@ -124,7 +124,7 @@ export default function TradePanel() {
             <button
               key={pct}
               onClick={() => setAmount(formatAmount(maxBuy * pct))}
-              className="px-2 py-1 bg-gray-200 border-2 border-black hover:bg-gray-300"
+              className="px-2 py-1 bg-gray-700 bg-opacity-70 text-gray-300 border-2 border-gray-600 hover:bg-gray-600"
             >
               {pct === 1 ? 'MAX' : `${pct * 100}%`}
             </button>
