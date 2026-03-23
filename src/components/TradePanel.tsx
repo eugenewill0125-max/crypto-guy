@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { tokens } from '../data/tokens';
 import { useLanguage } from '../i18n/LanguageContext';
+import PixelToast from './PixelToast';
+
+interface ToastState {
+  message: string;
+  type: 'success' | 'error' | 'info';
+}
 
 export default function TradePanel() {
   const { executeTrade, endMonth, balance, positions, unlockedTokens } = useGameStore();
@@ -11,6 +17,11 @@ export default function TradePanel() {
   const [buyHover, setBuyHover] = useState(false);
   const [sellHover, setSellHover] = useState(false);
   const [allInHover, setAllInHover] = useState(false);
+  const [toast, setToast] = useState<ToastState | null>(null);
+
+  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info') => {
+    setToast({ message, type });
+  }, []);
 
   const token = tokens[selectedToken];
   const currentPrice = token?.currentPrice || 0;
@@ -38,31 +49,42 @@ export default function TradePanel() {
     return val.toFixed(0);
   };
 
+  const insufficientBalance = language === 'zh' ? '余额不足！' : 'Insufficient balance!';
+  const insufficientHoldings = language === 'zh' ? '持仓不足！' : 'Insufficient holdings!';
+  const buySuccess = (amt: string, sym: string) => language === 'zh' ? `成功买入 ${amt} ${sym}` : `Bought ${amt} ${sym}`;
+  const sellSuccess = (amt: string, sym: string) => language === 'zh' ? `成功卖出 ${amt} ${sym}` : `Sold ${amt} ${sym}`;
+
   const handleBuy = () => {
     const amt = parseFloat(amount);
-    if (isNaN(amt) || amt <= 0) { alert(t('invalidAmount')); return; }
+    if (isNaN(amt) || amt <= 0) { showToast(t('invalidAmount'), 'error'); return; }
     const cost = amt * currentPrice;
-    if (cost > balance) { alert(language === 'zh' ? '余额不足！' : 'Insufficient balance!'); return; }
+    if (cost > balance) { showToast(insufficientBalance, 'error'); return; }
     executeTrade('buy', amt, selectedToken);
+    showToast(buySuccess(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleSell = () => {
     const amt = parseFloat(amount);
-    if (isNaN(amt) || amt <= 0) { alert(t('invalidAmount')); return; }
-    if (amt > maxSell) { alert(language === 'zh' ? '持仓不足！' : 'Insufficient holdings!'); return; }
+    if (isNaN(amt) || amt <= 0) { showToast(t('invalidAmount'), 'error'); return; }
+    if (amt > maxSell) { showToast(insufficientHoldings, 'error'); return; }
     executeTrade('sell', amt, selectedToken);
+    showToast(sellSuccess(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleBuyPct = (pct: number) => {
     const amt = maxBuy * pct;
-    if (amt <= 0) { alert(language === 'zh' ? '余额不足！' : 'Insufficient balance!'); return; }
-    executeTrade('buy', parseFloat(formatAmount(amt)), selectedToken);
+    if (amt <= 0) { showToast(insufficientBalance, 'error'); return; }
+    const finalAmt = parseFloat(formatAmount(amt));
+    executeTrade('buy', finalAmt, selectedToken);
+    showToast(buySuccess(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const handleSellPct = (pct: number) => {
     const amt = maxSell * pct;
-    if (amt <= 0) { alert(language === 'zh' ? '持仓不足！' : 'Insufficient holdings!'); return; }
-    executeTrade('sell', parseFloat(formatAmount(amt)), selectedToken);
+    if (amt <= 0) { showToast(insufficientHoldings, 'error'); return; }
+    const finalAmt = parseFloat(formatAmount(amt));
+    executeTrade('sell', finalAmt, selectedToken);
+    showToast(sellSuccess(formatAmount(amt), token?.symbol || ''), 'success');
   };
 
   const pctOptions = [0.25, 0.5, 0.75, 1];
@@ -208,6 +230,13 @@ export default function TradePanel() {
         {t('endMonth')}
       </button>
       </div>
+      {toast && (
+        <PixelToast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }
