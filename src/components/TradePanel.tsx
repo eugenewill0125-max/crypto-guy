@@ -57,8 +57,14 @@ export default function TradePanel() {
   };
 
   return (
-    <div className="bg-white border-4 border-black p-4 space-y-4">
-      <div className="text-sm font-bold">{t('tradeOperations')}</div>
+    <div
+      className="border-4 border-black p-4 space-y-4 bg-cover bg-center relative"
+      style={{ backgroundImage: 'url(/trade-bg.jpg)' }}
+    >
+      {/* 半透明遮罩确保文字可读 */}
+      <div className="absolute inset-0 bg-black bg-opacity-50" />
+      <div className="relative z-10 space-y-4">
+      <div className="text-sm font-bold text-white">{t('tradeOperations')}</div>
 
       {/* Token Selector */}
       {unlockedTokens.length > 1 && (
@@ -88,22 +94,22 @@ export default function TradePanel() {
       )}
 
       <div className="space-y-2">
-        <div className="flex justify-between text-xs">
+        <div className="flex justify-between text-xs text-gray-200">
           <span>{token?.symbol} {t('price')}</span>
-          <span className="font-bold">{formatPrice(currentPrice)}</span>
+          <span className="font-bold text-white">{formatPrice(currentPrice)}</span>
         </div>
-        <div className="flex justify-between text-xs">
+        <div className="flex justify-between text-xs text-gray-200">
           <span>{t('maxBuy')}</span>
           <span>{formatAmount(maxBuy)} {token?.symbol}</span>
         </div>
-        <div className="flex justify-between text-xs">
+        <div className="flex justify-between text-xs text-gray-200">
           <span>{t('maxSell')}</span>
           <span>{formatAmount(maxSell)} {token?.symbol}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="block text-xs">{t('tradeAmount')} ({token?.symbol})</label>
+        <label className="block text-xs text-gray-200">{t('tradeAmount')} ({token?.symbol})</label>
         <input
           type="number"
           value={amount}
@@ -153,6 +159,7 @@ export default function TradePanel() {
       >
         {t('endMonth')}
       </button>
+      </div>
     </div>
   );
 }
