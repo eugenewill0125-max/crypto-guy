@@ -218,12 +218,12 @@ export const eventTranslations: Record<string, { title: { zh: string; en: string
   },
   'dao_002': {
     title: {
-      zh: 'The DAO 异常退款请求',
-      en: 'Unusual Refund Requests on The DAO'
+      zh: 'The DAO 资金异动',
+      en: 'The DAO Fund Activity'
     },
     description: {
-      zh: 'The DAO 智能合约内出现异常活跃的资金流动，大量资金正在被快速转移……',
-      en: 'Unusually active fund movements detected in The DAO smart contract. Large amounts of capital are being rapidly transferred...'
+      zh: 'The DAO 智能合约内出现密集的资金分割操作，多个子合约被批量创建。社区对此看法不一：有人认为这是大户正常行使投票退出权，也有人猜测是项目方在进行技术升级测试。',
+      en: 'Intensive fund-splitting operations detected in The DAO smart contract, with multiple child contracts being created in batch. The community is divided: some believe whales are simply exercising their voting exit rights, while others speculate the team is running technical upgrade tests.'
     },
     resultDescription: {
       zh: 'The DAO 智能合约中的漏洞被黑客利用，导致总供应量 5% 的 ETH 被盗走，市场恐慌蔓延，ETH 价格暴跌。',
